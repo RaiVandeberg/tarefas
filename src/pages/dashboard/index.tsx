@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next'
 import styles from './styles.module.css'
+import { ChangeEvent, useState } from 'react'
 import Head from 'next/head'
 import { getSession } from 'next-auth/react'
 import { TextArea } from '@/components/textarea'
@@ -7,6 +8,10 @@ import { FiShare2 } from 'react-icons/fi'
 import { FaTrash } from 'react-icons/fa'
 
 export default function Dashboard() {
+
+    const [input, setInput] = useState('')
+    const [publicTask, setPublicTask] = useState(false)
+
     return (
         <div className={styles.container}>
             <Head>
@@ -22,7 +27,11 @@ export default function Dashboard() {
                     </h1>
 
                     <form > 
-                        <TextArea placeholder="Digite qual sua tarefa" />
+                        <TextArea placeholder="Digite qual sua tarefa..." 
+                        value={input}
+                        onChange={ (event: ChangeEvent<HTMLTextAreaElement> )=> 
+                        setInput(event.target.value)}/>
+                        
                         <div className={styles.checkboxArea}>
                             <input type="checkbox" 
                             className={styles.checkbox}
