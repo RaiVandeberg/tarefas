@@ -63,3 +63,8 @@
     background-color: #ff4d4d;
 
 }
+
+.button:disabled{
+    background-color: #410101;
+    cursor: not-allowed;
+}

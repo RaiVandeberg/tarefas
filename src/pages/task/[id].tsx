@@ -1,9 +1,13 @@
+import { ChangeEvent, FormEvent, useState } from "react";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import  styles  from "./style.module.css";
 import { GetServerSideProps } from "next";
 import { db } from "@/services/firebaseConnection";
-import { doc, collection, query, where, getDoc } from "firebase/firestore";
+import { doc, collection, query, where, getDoc, addDoc } from "firebase/firestore";
 import { TextArea } from "@/components/textarea";
+import { toast } from "react-hot-toast";
+import { create } from "domain";
 
 
 interface TaskProps {
@@ -17,6 +21,39 @@ interface TaskProps {
 }
 
 export default function Task ( { item }: TaskProps) {
+
+
+    const [input, setInput] = useState("");
+    
+    const { data: session } = useSession();
+
+    async function handleComment(event: FormEvent) {
+        event.preventDefault();
+
+        if(input ==="") return;
+
+        if(!session?.user?.email || !session?.user?.name) return;
+        
+        try {
+            const docRef = await addDoc (collection(db, "comments"), {
+                comment: input,
+                created: new Date(),
+                user: session?.user?.email,
+                name: session?.user?.name,
+                taskId: item.taskid,
+
+            })
+
+            setInput("")
+        } catch (error) {
+            console.log(error)
+            toast.error("Erro ao enviar comentario!")
+            
+        }
+        toast.success("Comentario enviado com sucesso!")
+    
+    }
+
     return (
         <div className={styles.container}>
             <Head>
@@ -34,10 +71,15 @@ export default function Task ( { item }: TaskProps) {
 
             <section className={styles.commentsContainer}>
                 <h2>Deixar Comentarios</h2>
-                <form>
-                    <TextArea placeholder="Deixe seu comentario" />
+                <form onSubmit={handleComment}>
+                    <TextArea 
+                    value={input}
+                    onChange={ (event: ChangeEvent<HTMLTextAreaElement> )=> setInput(event.target.value)}
+                    placeholder="Deixe seu comentario" />
 
-                        <button  className={styles.button}>Enviar Comentario</button>
+                        <button  
+                        disabled={!session?.user}
+                        className={styles.button}>Enviar Comentario</button>
                     
                 </form>
             </section>
@@ -81,7 +123,7 @@ export const getServerSideProps: GetServerSideProps = async ( { params }) =>{
         taskid: id,
     }
     
-    console.log(Task)
+    
 
     return {
         props: { 
