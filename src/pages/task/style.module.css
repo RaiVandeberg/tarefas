@@ -68,3 +68,38 @@
     background-color: #410101;
     cursor: not-allowed;
 }
+
+.comment{
+    border: 1px solid #909090;
+    padding: 14px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+    
+}
+
+.headComment{
+    display: flex;
+    align-items: center;
+}
+
+.commentsLabel{
+    background-color: #cccc;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-right: 8px;
+    color: black;
+    font-weight: 700;
+}
+
+.buttonTrash{
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.comment p{
+    white-space: pre-wrap;
+    margin-top: 14px;
+    width: 100%;
+}
