@@ -9,6 +9,8 @@ import { FaTrash } from 'react-icons/fa'
 import { db } from '@/services/firebaseConnection'
 import { addDoc, collection, query, orderBy, where, onSnapshot, doc, deleteDoc } from 'firebase/firestore'
 import Link from 'next/link'
+import { toast } from 'react-hot-toast';
+import { showDeleteToast } from './deleteTask'
 
 
 
@@ -85,14 +87,16 @@ export default function Dashboard( { user }: HomeProps ) {
 
         async function handleShare(id: string){
             await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_URL}/task/${id}`)
-            alert("Link copiado com sucesso!")
+            toast.success('Link copiado para a área de transferência!');
 
         }
 
         async function handleDeletetask(id: string){
-            const docRef = doc(db, "tarefas", id)
-            await deleteDoc(docRef)
-            alert("Tarefa deletada com sucesso!")
+            showDeleteToast(async () => {
+                const docRef = doc(db, 'tarefas', id)
+                await deleteDoc(docRef)
+                // O toast de sucesso já é chamado dentro do componente
+              })
         }
 
             
