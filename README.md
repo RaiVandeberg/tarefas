@@ -1,6 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Tarefas+
 
-## Getting Started
+Tarefas+ é um sistema desenvolvido com [Next.js](https://nextjs.org) para ajudar você a organizar suas tarefas e estudos de forma eficiente. O projeto permite criar, gerenciar e compartilhar tarefas públicas ou privadas.
+
+## Funcionalidades
+
+- Cadastro de tarefas com título e visibilidade (pública ou privada).
+- Listagem de tarefas cadastradas.
+- Compartilhamento de tarefas públicas.
+- Integração com Firebase para persistência de dados.
+- Autenticação de usuários com NextAuth.
+
+## Tecnologias Utilizadas
+
+- [Next.js](https://nextjs.org)
+- [React](https://reactjs.org)
+- [Firebase](https://firebase.google.com)
+- [NextAuth](https://next-auth.js.org)
+- [React Icons](https://react-icons.github.io/react-icons)
+
+## Estrutura do Projeto
+
 
 First, run the development server:
 
